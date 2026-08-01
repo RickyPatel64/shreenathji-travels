@@ -1,26 +1,30 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
 import "./globals.css";
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-});
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import FloatingActions from "@/components/layout/FloatingActions";
 
 export const metadata: Metadata = {
-  title: "Shreenathji Travels | Taxi Service in Vadodara",
-  description:
-    "Reliable taxi service in Vadodara for airport transfers, local rides, and outstation trips.",
+  title: "Shreenathji Travels",
+  description: "Taxi & Car Rental Service in Vadodara",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body className={poppins.className}>{children}</body>
+      <body>
+        <Navbar />
+
+        {children}
+
+        <Footer />
+        <FloatingActions />
+      </body>
     </html>
   );
 }

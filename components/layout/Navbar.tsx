@@ -1,20 +1,15 @@
 "use client";
-
+import { navigation } from "@/lib/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Menu, Phone, MessageCircle, X } from "lucide-react";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
-const navLinks = [
-  { href: "#home", label: "Home" },
-  { href: "#services", label: "Services" },
-  { href: "#fleet", label: "Fleet" },
-  { href: "#contact", label: "Contact" },
-];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-
+  const pathname = usePathname();
   return (
     <header className="sticky top-0 z-50 border-b bg-white/95 backdrop-blur">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4">
@@ -38,15 +33,19 @@ export default function Navbar() {
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
-          {navLinks.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="font-medium text-gray-700 transition hover:text-blue-700"
+          {navigation.map((item) => (
+            <Link
+            key={item.name}
+            href={item.href}
+            className={`font-medium transition ${
+  pathname === item.href
+    ? "text-blue-700 border-b-2 border-yellow-500 pb-1"
+    : "text-gray-700 hover:text-blue-700"
+}`}
             >
-              {item.label}
-            </a>
-          ))}
+          {item.name}
+  </Link>
+))}
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
@@ -58,15 +57,13 @@ export default function Navbar() {
             <Phone size={18} />
           </a>
 
-          <a
-            href="https://wa.me/919023801735"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 rounded-lg bg-green-600 px-5 py-3 font-semibold text-white transition hover:bg-green-700"
-          >
-            <MessageCircle size={18} />
-            Book Now
-          </a>
+          <Link
+  href="/booking"
+  className="flex items-center gap-2 rounded-lg bg-green-600 px-5 py-3 font-semibold text-white transition hover:bg-green-700"
+>
+  <MessageCircle size={18} />
+  Book Now
+</Link>
         </div>
 
         <button
@@ -81,25 +78,28 @@ export default function Navbar() {
       {isOpen && (
         <div className="border-t bg-white md:hidden">
           <nav className="flex flex-col p-4">
-            {navLinks.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={() => setIsOpen(false)}
-                className="rounded-lg px-3 py-3 hover:bg-gray-100"
-              >
-                {item.label}
-              </a>
-            ))}
+            {navigation.map((item) => (
+  <Link
+    key={item.name}
+    href={item.href}
+    onClick={() => setIsOpen(false)}
+    className={`rounded-lg px-3 py-3 ${
+  pathname === item.href
+    ? "bg-blue-50 text-blue-700 font-semibold"
+    : "hover:bg-gray-100"
+}`}
+  >
+    {item.name}
+  </Link>
+))}
 
-            <a
-              href="https://wa.me/919023801735"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-3 rounded-lg bg-green-600 px-4 py-3 text-center font-semibold text-white"
-            >
-              Book on WhatsApp
-            </a>
+            <Link
+  href="/booking"
+  onClick={() => setIsOpen(false)}
+  className="mt-3 rounded-lg bg-green-600 px-4 py-3 text-center font-semibold text-white"
+>
+  Book Now
+</Link>
           </nav>
         </div>
       )}

@@ -10,7 +10,7 @@ import ContactSection from "@/components/home/ContactSection";
 export default function Home() {
   return (
     <>
-      <Navbar />
+     
       <Hero />
       <Services />
       <FleetPreview />
